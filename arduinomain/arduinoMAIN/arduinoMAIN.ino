@@ -1,12 +1,4 @@
-/* Написать функции:
-  load_in() -> int counter
-  load_out() -> int order
-  take_high()
-  take_low()
-*/
-
 #include <AccelStepper.h>
-
 #include <Servo.h>
 Servo servoRIGHT;
 Servo servoLEFT;
@@ -27,7 +19,6 @@ String incomingByte;
 int counter = 0;
 int order = 0;
 String ans;
-
 
 //пины для шаговых
 const int stepPin1 = 2;  // пин шага для двигателя 1
@@ -59,7 +50,7 @@ void setup() {
   stepper3.setMaxSpeed(200);
   stepper3.setAcceleration(100);
 
-  Serial.begin(9600);
+  Serial.begin(115200);
   
 }
 
@@ -80,25 +71,25 @@ void move_forward(int arg) {
 
 void turn_right(){
   /*Поворот направо*/
-  servoRIGHT.write(180);//ВПИСАТЬ УГЛЫ
-  servoLEFT.write(180);
+  servoRIGHT.write(-18);//ВПИСАТЬ УГЛЫ
+  servoLEFT.write(18);
 
 }
 
 void turn_left(){
   /*Поворот налево*/
-  servoRIGHT.write(180);//ВПИСАТЬ УГЛЫ
-  servoLEFT.write(180);
+  servoRIGHT.write(18);//ВПИСАТЬ УГЛЫ
+  servoLEFT.write(-18);
 }
 
 void reverse(){
   /*Функция поворота*/
-  servoRIGHT.write(180);//ВПИСАТЬ УГЛЫ
-  servoLEFT.write(180);
+  servoRIGHT.write(36);//ВПИСАТЬ УГЛЫ
+  servoLEFT.write(-36);
 }
 
 void QR_low_moving_to_pos() {
-  /*Для задачи положения манипулятора для нижней полки, передачи и чтению данных с малины*/
+  /*Для задачи положения манипулятора для нижней полки*/
   // ОТРЕДАКТИРОВАТЬ  движение колен 
   stepper1.moveTo(); //в аргументы функции дописать положение
   stepper1.runToPosition();
@@ -133,7 +124,7 @@ void QR_low_moving_back() {
 }
 
 void QR_high_moving_to_pos() {
-  /*Для задачи положения манипулятора для верхней полки, передачи и чтению данных с малины*/
+  /*Для задачи положения манипулятора для верхней полки*/
 
   /*Написать движение манипулятора*/
   // ОТРЕДАКТИРОВАТЬ  движение колен 
@@ -163,16 +154,93 @@ void QR_high_moving_back() {
 }
 
 
-//ЧУТЬ ЧУТЬ НЕ ПОН ЧЕ ТУТ НАДО
+/*
+Объяснение ( ):
+  Робот должен встать в ту точку, где должна происходить выгрузка в зависимости от номера заказа (Переменная order)
+  Далее происходит выгрузка в эту точку в завимости от количества деталек в его багажнике(Переменная counter)
+*/
+
+//ЧТОООООООООООООООООООООООООО ТО НАПИАПАИАПИСАЛА ВРОДЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕ
 /* Написать движение робота + коленей для каждого из номера заказов
 load_out(int order, int counter) {
   if (order == 1){
+    //подкатывает к столу заказов 
+    servoRIGHT.write(-18);//ВПИСАТЬ УГЛЫ
+    servoLEFT.write(18);
 
+    stepper1.moveTo(); //в аргументы функции дописать положение
+    stepper1.runToPosition();
+
+    stepper2.moveTo(); //в аргументы функции дописать положение
+    stepper2.runToPosition();
+
+    stepper3.moveTo(); //в аргументы функции дописать положение
+    stepper3.runToPosition();
+    delay(1000);
+    servoKOLENO.write(180);//выгрузил
+    delay(1000);
+    //НА ИСХОДНУЮ
+    stepper1.moveTo(0);
+    stepper1.runToPosition();
+
+    stepper2.moveTo(0);
+    stepper2.runToPosition();
+
+    stepper3.moveTo(0);
+    stepper3.runToPosition();
   }
   if (order == 2){
+    //подкатывает к столу заказов 
+    servoRIGHT.write(-18);//ВПИСАТЬ УГЛЫ
+    servoLEFT.write(18);
+
+    stepper1.moveTo(); //в аргументы функции дописать положение
+    stepper1.runToPosition();
+
+    stepper2.moveTo(); //в аргументы функции дописать положение
+    stepper2.runToPosition();
+
+    stepper3.moveTo(); //в аргументы функции дописать положение
+    stepper3.runToPosition();
+    delay(1000);
+    servoKOLENO.write(180);//выгрузил
+    delay(1000);
+    //НА ИСХОДНУЮ
+    stepper1.moveTo(0);
+    stepper1.runToPosition();
+
+    stepper2.moveTo(0);
+    stepper2.runToPosition();
+
+    stepper3.moveTo(0);
+    stepper3.runToPosition();
     
   }
   if (order == 3){
+    //подкатывает к столу заказов 
+    servoRIGHT.write(-18);//ВПИСАТЬ УГЛЫ
+    servoLEFT.write(18);
+
+    stepper1.moveTo(); //в аргументы функции дописать положение
+    stepper1.runToPosition();
+
+    stepper2.moveTo(); //в аргументы функции дописать положение
+    stepper2.runToPosition();
+
+    stepper3.moveTo(); //в аргументы функции дописать положение
+    stepper3.runToPosition();
+    delay(1000);
+    servoKOLENO.write(180);//выгрузил
+    delay(1000);
+    //НА ИСХОДНУЮ
+    stepper1.moveTo(0);
+    stepper1.runToPosition();
+
+    stepper2.moveTo(0);
+    stepper2.runToPosition();
+
+    stepper3.moveTo(0);
+    stepper3.runToPosition();
     
   } 
 }
@@ -180,8 +248,9 @@ load_out(int order, int counter) {
 
 
 //ДОООООООООООООООООООООООООПИСАЛААААААААААААААААААААААААААААААААААААААААААААААААААА
-/* Написать движение коленей для каждого из каунтеров Каунтеры - кол-во коробок
+// Написать движение коленей для каждого из каунтеров Каунтеры - кол-во коробок
 load_in(int counter){
+  servoKOLENO.write(36);//ВПИСАТЬ
   if (counter == 1){
     stepper1.moveTo(); //в аргументы функции дописать положение
     stepper1.runToPosition();
@@ -192,17 +261,7 @@ load_in(int counter){
     stepper3.moveTo(); //в аргументы функции дописать положение
     stepper3.runToPosition();
 
-    servoKOLENO.write(180)//ВПИСАТЬ
-    delay(1000)
-  //на исходную
-    stepper1.moveTo(0);
-    stepper1.runToPosition();
-
-    stepper2.moveTo(0);
-    stepper2.runToPosition();
-
-    stepper3.moveTo(0);
-    stepper3.runToPosition();
+    servoKOLENO.write(180);//взял 
 
   }
   if (counter == 2){
@@ -215,17 +274,7 @@ load_in(int counter){
     stepper3.moveTo(); //в аргументы функции дописать положение
     stepper3.runToPosition();
 
-    servoKOLENO.write(180)//ВПИСАТЬ
-    delay(1000)
-  //на исходную
-    stepper1.moveTo(0);
-    stepper1.runToPosition();
-
-    stepper2.moveTo(0);
-    stepper2.runToPosition();
-
-    stepper3.moveTo(0);
-    stepper3.runToPosition();
+    servoKOLENO.write(180);//взял 
 
   }
   if (counter == 3){
@@ -238,17 +287,7 @@ load_in(int counter){
     stepper3.moveTo(); //в аргументы функции дописать положение
     stepper3.runToPosition();
 
-    servoKOLENO.write(180)//ВПИСАТЬ
-    delay(1000)
-  //на исходную
-    stepper1.moveTo(0);
-    stepper1.runToPosition();
-
-    stepper2.moveTo(0);
-    stepper2.runToPosition();
-
-    stepper3.moveTo(0);
-    stepper3.runToPosition();
+    servoKOLENO.write(180);//взял 
 
   }
   if (counter == 4){
@@ -261,24 +300,24 @@ load_in(int counter){
     stepper3.moveTo(); //в аргументы функции дописать положение
     stepper3.runToPosition();
 
-    servoKOLENO.write(180)//ВПИСАТЬ
-    delay(1000)
-  //на исходную
-    stepper1.moveTo(0);
-    stepper1.runToPosition();
-
-    stepper2.moveTo(0);
-    stepper2.runToPosition();
-
-    stepper3.moveTo(0);
-    stepper3.runToPosition();
-
+    servoKOLENO.write(180);//взял 
   }
-}*/
-//ДОООООООООООООООООООООООООПИСАЛААААААААААААААААААААААААААААААААААААААААААААААААААА
+  delay(1000);
+  //на исходную
+  stepper1.moveTo(0);
+  stepper1.runToPosition();
+
+  stepper2.moveTo(0);
+  stepper2.runToPosition();
+
+  stepper3.moveTo(0);
+  stepper3.runToPosition();
+}
+
+//Здесь нужно больше кода. Манипулятор должен не только закинуть на верхнее звено коробку, но и поднять ее, не уронив полку
 void take_high() {
   //Для захвата коробки на верхней полке
-
+  //Ползет к коробке
   stepper1.moveTo(); //в аргументы функции дописать положение
   stepper1.runToPosition();
 
@@ -288,9 +327,29 @@ void take_high() {
   stepper3.moveTo(); //в аргументы функции дописать положение
   stepper3.runToPosition();
 
-  servoKOLENO.write(180)//ВПИСАТЬ
+  servoKOLENO.write(180)//взял 
   delay(1000)
-//ЗАГРУЗКА В "РУКЗАЧОК" РОБОТА
+  //приподнял
+  stepper1.moveTo(); //в аргументы функции дописать положение
+  stepper1.runToPosition();
+
+  stepper2.moveTo(); //в аргументы функции дописать положение
+  stepper2.runToPosition();
+
+  stepper3.moveTo(); //в аргументы функции дописать положение
+  stepper3.runToPosition();
+
+  servoKOLENO.write(180)//ОТТАЩИЛ НА СЕБЯ КОРОБКУ
+//ЗАГРУЗКА В "РЮКЗАЧОК" РОБОТА
+  stepper1.moveTo(); //в аргументы функции дописать положение
+  stepper1.runToPosition();
+
+  stepper2.moveTo(); //в аргументы функции дописать положение
+  stepper2.runToPosition();
+
+  stepper3.moveTo(); //в аргументы функции дописать положение
+  stepper3.runToPosition();
+//НА ИСХОДНУЮ
   stepper1.moveTo(0);
   stepper1.runToPosition();
 
@@ -302,9 +361,9 @@ void take_high() {
 }
 
 
-
+//Здесь нужно больше кода. Манипулятор должен не только закинуть на верхнее звено коробку, но и поднять ее, не уронив полку, а потом положить в багажник
 void take_low() {
-  //Для захвата коробки на нижней полке
+   //Ползет к коробке
   stepper1.moveTo(); //в аргументы функции дописать положение
   stepper1.runToPosition();
 
@@ -314,9 +373,29 @@ void take_low() {
   stepper3.moveTo(); //в аргументы функции дописать положение
   stepper3.runToPosition();
 
-  servoKOLENO.write(180)//ВПИСАТЬ
+  servoKOLENO.write(180)//взял 
   delay(1000)
-//ЗАГРУЗКА В "РУКЗАЧОК" РОБОТА
+  //приподнял
+  stepper1.moveTo(); //в аргументы функции дописать положение
+  stepper1.runToPosition();
+
+  stepper2.moveTo(); //в аргументы функции дописать положение
+  stepper2.runToPosition();
+
+  stepper3.moveTo(); //в аргументы функции дописать положение
+  stepper3.runToPosition();
+
+  servoKOLENO.write(180)//ОТТАЩИЛ НА СЕБЯ КОРОБКУ
+//ЗАГРУЗКА В "РЮКЗАЧОК" РОБОТА
+  stepper1.moveTo(); //в аргументы функции дописать положение
+  stepper1.runToPosition();
+
+  stepper2.moveTo(); //в аргументы функции дописать положение
+  stepper2.runToPosition();
+
+  stepper3.moveTo(); //в аргументы функции дописать положение
+  stepper3.runToPosition();
+//НА ИСХОДНУЮ
   stepper1.moveTo(0);
   stepper1.runToPosition();
 
